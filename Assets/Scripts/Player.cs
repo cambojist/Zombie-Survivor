@@ -5,7 +5,8 @@ namespace Assets.Scripts
 {
     public class Player : MonoBehaviour
     {
-        private Vector2 _inputDirection;
+        public Vector2 InputDirection { get; private set; }
+
         private float _speed = 3;
 
         private Rigidbody2D _rigidBody;
@@ -25,22 +26,22 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            var move = _inputDirection * Time.fixedDeltaTime * _speed;
+            var move = InputDirection * Time.fixedDeltaTime * _speed;
             _rigidBody.MovePosition(_rigidBody.position + move);
         }
 
         private void LateUpdate()
         {
-            _animator.SetFloat("Speed", _inputDirection.magnitude);
-            if (_inputDirection.x != 0)
+            _animator.SetFloat("Speed", InputDirection.magnitude);
+            if (InputDirection.x != 0)
             {
-                _spriteRenderer.flipX = _inputDirection.x < 0;
+                _spriteRenderer.flipX = InputDirection.x < 0;
             }
         }
 
         private void OnMove(InputValue value)
         {
-            _inputDirection = value.Get<Vector2>();
+            InputDirection = value.Get<Vector2>();
         }
     }
 }
