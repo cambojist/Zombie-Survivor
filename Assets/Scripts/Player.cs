@@ -7,7 +7,7 @@ namespace Assets.Scripts
     {
         public Vector2 InputDirection { get; private set; }
 
-        private float _speed = 3;
+        [SerializeField] private float _speed = 3;
 
         private Rigidbody2D _rigidBody;
         private SpriteRenderer _spriteRenderer;

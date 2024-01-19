@@ -4,6 +4,13 @@ namespace Assets.Scripts
 {
     public class Reposition : MonoBehaviour
     {
+        private Collider2D _collider;
+
+        private void Start()
+        {
+            _collider = GetComponent<Collider2D>();
+        }
+
         private void OnTriggerExit2D(Collider2D collision)
         {
             if (!collision.CompareTag("Area"))
@@ -33,6 +40,10 @@ namespace Assets.Scripts
                     }
                     break;
                 case "Enemy":
+                    if (_collider.enabled)
+                    {
+                        transform.Translate(playerDir * 20 + new Vector2(Random.Range(-3, 3), Random.Range(-3, 3)));
+                    }
                     break;
             }
 
