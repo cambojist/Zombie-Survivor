@@ -55,5 +55,29 @@ namespace Assets.Scripts
             health = data.health;
             maxHealth = data.health;
         }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (!collision.CompareTag("Bullet"))
+            {
+                return;
+            }
+
+            health -= collision.GetComponent<Bullet>().damage;
+
+            if (health > 0)
+            {
+
+            }
+            else
+            {
+                Dead();
+            }
+        }
+
+        private void Dead()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
