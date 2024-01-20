@@ -9,6 +9,14 @@ public class Weapon : MonoBehaviour
     public int count;
     public float speed;
 
+    private float _timer;
+    private Player _player;
+
+    private void Awake()
+    {
+        _player = GetComponentInParent<Player>();
+    }
+
     private void Start()
     {
         Init();
@@ -21,6 +29,13 @@ public class Weapon : MonoBehaviour
                 transform.Rotate(speed * Time.deltaTime * Vector3.back);
                 break;
             default:
+                _timer += Time.deltaTime;
+
+                if (_timer > speed)
+                {
+                    _timer = 0;
+                    Fire();
+                }
                 break;
         }
     }
@@ -34,6 +49,7 @@ public class Weapon : MonoBehaviour
                 Batch();
                 break;
             default:
+                speed = 0.3f;
                 break;
         }
     }
@@ -70,5 +86,20 @@ public class Weapon : MonoBehaviour
         {
             Batch();
         }
+    }
+
+    private void Fire()
+    {
+        if (!_player.scanner.nearestTarget)
+        {
+            return;
+        }
+
+        var targetPos = _player.scanner.nearestTarget.position;
+        var dir = (targetPos - transform.position).normalized;
+
+        var bullet = GameManager.instance.spawnManager.Get(prefabId).transform;
+        bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
+        bullet.GetComponent<Bullet>().Init(damage, count, dir);
     }
 }

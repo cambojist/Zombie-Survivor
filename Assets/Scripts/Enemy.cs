@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -13,6 +14,7 @@ namespace Assets.Scripts
         private Rigidbody2D _rigidbody;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
+        private WaitForFixedUpdate _wait;
         private bool _isAlive = true;
 
         void Awake()
@@ -21,11 +23,15 @@ namespace Assets.Scripts
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _playerRb = GameManager.instance.player.GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _wait = new WaitForFixedUpdate();
         }
 
         void FixedUpdate()
         {
-            if (!_isAlive) { return; }
+            if (!_isAlive || _animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            {
+                return;
+            }
             var direction = _playerRb.position - _rigidbody.position;
             var moveDirection = Time.fixedDeltaTime * speed * direction.normalized;
             _rigidbody.MovePosition(_rigidbody.position + moveDirection);
@@ -48,7 +54,6 @@ namespace Assets.Scripts
 
         public void Init(SpawnData data)
         {
-            Debug.Log(animatorController.Length);
             var l = animatorController[data.spawnType];
             _animator.runtimeAnimatorController = l;
             speed = data.speed;
@@ -64,15 +69,24 @@ namespace Assets.Scripts
             }
 
             health -= collision.GetComponent<Bullet>().damage;
+            StartCoroutine(KnockBack());
 
             if (health > 0)
             {
-
+                _animator.SetTrigger("Hit");
             }
             else
             {
                 Dead();
             }
+        }
+
+        private IEnumerator KnockBack()
+        {
+            yield return _wait;
+            var playerPos = GameManager.instance.player.transform.position;
+            var direction = (transform.position - playerPos).normalized;
+            _rigidbody.AddForce(direction * 3, ForceMode2D.Impulse);
         }
 
         private void Dead()

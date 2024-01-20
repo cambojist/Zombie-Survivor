@@ -6,6 +6,7 @@ namespace Assets.Scripts
     public class Player : MonoBehaviour
     {
         public Vector2 InputDirection { get; private set; }
+        public Scanner scanner;
 
         [SerializeField] private float _speed = 3;
 
@@ -13,11 +14,12 @@ namespace Assets.Scripts
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
 
-        void Start()
+        void Awake()
         {
             _rigidBody = GetComponent<Rigidbody2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
+            scanner = GetComponent<Scanner>();
         }
 
         void Update()
