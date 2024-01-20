@@ -68,7 +68,7 @@ namespace Assets.Scripts
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (!collision.CompareTag("Bullet"))
+            if (!collision.CompareTag("Bullet") || !_isAlive)
             {
                 return;
             }
@@ -87,6 +87,9 @@ namespace Assets.Scripts
                 _rigidbody.simulated = false;
                 _spriteRenderer.sortingOrder = 1;
                 _animator.SetBool("Dead", true);
+                //exp
+                GameManager.instance.kills++;
+                GameManager.instance.GetExp();
             }
         }
 
