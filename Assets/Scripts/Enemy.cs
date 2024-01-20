@@ -12,6 +12,7 @@ namespace Assets.Scripts
 
         private Rigidbody2D _playerRb;
         private Rigidbody2D _rigidbody;
+        private Collider2D _collider;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private WaitForFixedUpdate _wait;
@@ -20,6 +21,7 @@ namespace Assets.Scripts
         void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _collider = GetComponent<Collider2D>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _playerRb = GameManager.instance.player.GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
@@ -46,9 +48,12 @@ namespace Assets.Scripts
 
         private void OnEnable()
         {
-            // ?????
             _playerRb = GameManager.instance.player.GetComponent<Rigidbody2D>();
             _isAlive = true;
+            _collider.enabled = true;
+            _rigidbody.simulated = true;
+            _spriteRenderer.sortingOrder = 2;
+            _animator.SetBool("Dead", false);
             health = maxHealth;
         }
 
@@ -77,7 +82,11 @@ namespace Assets.Scripts
             }
             else
             {
-                Dead();
+                _isAlive = false;
+                _collider.enabled = false;
+                _rigidbody.simulated = false;
+                _spriteRenderer.sortingOrder = 1;
+                _animator.SetBool("Dead", true);
             }
         }
 
@@ -89,7 +98,7 @@ namespace Assets.Scripts
             _rigidbody.AddForce(direction * 3, ForceMode2D.Impulse);
         }
 
-        private void Dead()
+        void Dead()
         {
             gameObject.SetActive(false);
         }
