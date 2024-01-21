@@ -54,5 +54,26 @@ namespace Assets.Scripts
             }
             InputDirection = value.Get<Vector2>();
         }
+
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
+
+            GameManager.instance.health -= Time.deltaTime * 10;
+
+            if (GameManager.instance.health < 0)
+            {
+                for (int i = 2; i < transform.childCount; i++)
+                {
+                    transform.GetChild(i).gameObject.SetActive(false);
+                }
+
+                _animator.SetTrigger("Dead");
+                GameManager.instance.GameOver();
+            }
+        }
     }
 }
