@@ -7,8 +7,8 @@ namespace Assets.Scripts
     {
         public Vector2 InputDirection { get; private set; }
         public Scanner scanner;
-
-        [SerializeField] private float _speed = 3;
+        public Hand[] hands;
+        public float speed = 3;
 
         private Rigidbody2D _rigidBody;
         private SpriteRenderer _spriteRenderer;
@@ -20,6 +20,7 @@ namespace Assets.Scripts
             _spriteRenderer = GetComponent<SpriteRenderer>();
             _animator = GetComponent<Animator>();
             scanner = GetComponent<Scanner>();
+            hands = GetComponentsInChildren<Hand>(true);
         }
 
         void Update()
@@ -28,7 +29,7 @@ namespace Assets.Scripts
 
         private void FixedUpdate()
         {
-            var move = InputDirection * Time.fixedDeltaTime * _speed;
+            var move = InputDirection * Time.fixedDeltaTime * speed;
             _rigidBody.MovePosition(_rigidBody.position + move);
         }
 
