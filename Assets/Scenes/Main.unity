@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b27432bf25184b4184394a11cd5120d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: f49e47ee3ec3d0c4cbb3d2d19fdbd491, type: 2}
+  data: {fileID: 11400000, guid: d63f63cf9dd089b4384a930ad16898d7, type: 2}
   level: 0
   weapon: {fileID: 0}
   gear: {fileID: 0}
@@ -2315,7 +2315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b27432bf25184b4184394a11cd5120d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: f49e47ee3ec3d0c4cbb3d2d19fdbd491, type: 2}
+  data: {fileID: 11400000, guid: d86c308090ca3ae43907f0a1f1827d55, type: 2}
   level: 0
   weapon: {fileID: 0}
   gear: {fileID: 0}
@@ -7455,7 +7455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b27432bf25184b4184394a11cd5120d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: f49e47ee3ec3d0c4cbb3d2d19fdbd491, type: 2}
+  data: {fileID: 11400000, guid: ae8f21d6438571b4ebe9d9ed66f46d5b, type: 2}
   level: 0
   weapon: {fileID: 0}
   gear: {fileID: 0}
@@ -12128,7 +12128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b27432bf25184b4184394a11cd5120d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: f49e47ee3ec3d0c4cbb3d2d19fdbd491, type: 2}
+  data: {fileID: 11400000, guid: 45a64bc7c39a1774cb6b16ee171f9eec, type: 2}
   level: 0
   weapon: {fileID: 0}
   gear: {fileID: 0}

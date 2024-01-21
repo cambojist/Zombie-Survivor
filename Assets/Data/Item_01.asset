@@ -15,7 +15,9 @@ MonoBehaviour:
   id: 1
   itemName: Pistol
   type: 1
-  desciption: 
+  desciption: 'Increase damage {0}%
+
+    Increase projectile {1}'
   icon: {fileID: -205726582, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   baseDamage: 3
   baseQuantity: 0

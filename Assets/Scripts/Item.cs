@@ -1,6 +1,7 @@
 using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.UI;
+using static Assets.Scripts.ItemData;
 
 public class Item : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class Item : MonoBehaviour
     public Gear gear;
 
     private Image _icon;
-    private Text _text;
+    private Text _textLevel;
+    private Text _textName;
+    private Text _textDesc;
 
     private void Awake()
     {
@@ -18,12 +21,30 @@ public class Item : MonoBehaviour
         _icon.sprite = data.icon;
 
         Text[] texts = GetComponentsInChildren<Text>();
-        _text = texts[0];
+        _textLevel = texts[0];
+        _textName = texts[1];
+        _textDesc = texts[2];
+
+        _textName.text = data.itemName;
     }
 
-    private void LateUpdate()
+    private void OnEnable()
     {
-        _text.text = "Lv." + (level + 1);
+        _textLevel.text = "Lv." + (level + 1);
+        switch (data.type)
+        {
+            case ItemType.Melee:
+            case ItemType.Range:
+                _textDesc.text = string.Format(data.desciption, data.damages[level] * 100, data.quantities[level]);
+                break;
+            case ItemType.Gloves:
+            case ItemType.Shoes:
+                _textDesc.text = string.Format(data.desciption, data.damages[level] * 100);
+                break;
+            case ItemType.Heal:
+                _textDesc.text = string.Format(data.desciption);
+                break;
+        }
     }
 
     public void OnClick()

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2
   itemName: Gloves
   type: 2
-  desciption: 
+  desciption: Increase speed of weapon by {0}%
   icon: {fileID: -201829820, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
   baseDamage: 0
   baseQuantity: 0
@@ -27,3 +27,4 @@ MonoBehaviour:
   - 0.75
   quantities: 0000000000000000000000000000000000000000
   projectile: {fileID: 0}
+  hand: {fileID: 0}
