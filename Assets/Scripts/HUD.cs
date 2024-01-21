@@ -26,7 +26,7 @@ namespace Assets.Scripts
                 case InfoType.Exp:
 
                     var exp = GameManager.instance.exp;
-                    var maxExp = GameManager.instance.nextExp[GameManager.instance.level];
+                    var maxExp = GameManager.instance.nextExp[Mathf.Min(GameManager.instance.level, GameManager.instance.nextExp.Length - 1)];
                     _expBar.value = ((float)exp) / maxExp;
                     break;
                 case InfoType.Level:

@@ -23,18 +23,22 @@ namespace Assets.Scripts
             hands = GetComponentsInChildren<Hand>(true);
         }
 
-        void Update()
-        {
-        }
-
         private void FixedUpdate()
         {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
             var move = InputDirection * Time.fixedDeltaTime * speed;
             _rigidBody.MovePosition(_rigidBody.position + move);
         }
 
         private void LateUpdate()
         {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
             _animator.SetFloat("Speed", InputDirection.magnitude);
             if (InputDirection.x != 0)
             {
@@ -44,6 +48,10 @@ namespace Assets.Scripts
 
         private void OnMove(InputValue value)
         {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
             InputDirection = value.Get<Vector2>();
         }
     }

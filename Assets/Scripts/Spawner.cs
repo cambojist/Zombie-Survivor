@@ -17,6 +17,10 @@ namespace Assets.Scripts
 
         void Update()
         {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
             //TODO: rewrite using coroutine
             _timer += Time.deltaTime;
             level = Mathf.Min(Mathf.FloorToInt(GameManager.instance.gameTime / 10f), spawnData.Length - 1);

@@ -30,6 +30,10 @@ namespace Assets.Scripts
 
         void FixedUpdate()
         {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
             if (!_isAlive || _animator.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
             {
                 return;
@@ -42,6 +46,10 @@ namespace Assets.Scripts
 
         private void LateUpdate()
         {
+            if (!GameManager.instance.isAlive)
+            {
+                return;
+            }
             if (!_isAlive) { return; }
             _spriteRenderer.flipX = _playerRb.position.x < _rigidbody.position.x;
         }

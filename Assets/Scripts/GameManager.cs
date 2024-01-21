@@ -9,6 +9,7 @@ namespace Assets.Scripts
         [Header("# Game Control")]
         public float gameTime;
         public float maxGameTime = 2 * 10f;
+        public bool isAlive;
 
         [Header("# Player Info")]
         public int health;
@@ -21,19 +22,26 @@ namespace Assets.Scripts
         [Header("# Game Object")]
         public SpawnManager spawnManager;
         public Player player;
+        public LevelUp uiLevelUp;
 
         private void Awake()
         {
             instance = this;
         }
 
-        private void Start()
+        public void GameStart()
         {
             health = maxHealth;
+            uiLevelUp.Select(0);
+            isAlive = true;
         }
 
         void Update()
         {
+            if (!isAlive)
+            {
+                return;
+            }
             //TODO: rewrite using coroutine
             gameTime += Time.deltaTime;
 
@@ -46,12 +54,25 @@ namespace Assets.Scripts
         public void GetExp()
         {
             exp++;
-
-            if (exp >= nextExp[level])
+            var maxLevel = Mathf.Min(level, nextExp.Length - 1);
+            if (exp >= nextExp[maxLevel])
             {
-                exp = exp - nextExp[level];
+                exp = exp - nextExp[maxLevel];
                 level++;
+                uiLevelUp.Show();
             }
+        }
+
+        public void Stop()
+        {
+            isAlive = false;
+            Time.timeScale = 0;
+        }
+
+        public void Resume()
+        {
+            isAlive = true;
+            Time.timeScale = 1;
         }
     }
 }
