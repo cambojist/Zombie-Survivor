@@ -6,7 +6,7 @@ public class Weapon : MonoBehaviour
     public int id;
     public int prefabId;
     public float damage;
-    public int count;
+    public int quantity;
     public float speed;
 
     private float _timer;
@@ -14,13 +14,9 @@ public class Weapon : MonoBehaviour
 
     private void Awake()
     {
-        _player = GetComponentInParent<Player>();
+        _player = GameManager.instance.player;
     }
 
-    private void Start()
-    {
-        Init();
-    }
     void Update()
     {
         switch (id)
@@ -40,8 +36,18 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    public void Init()
+    public void Init(ItemData data)
     {
+        name = "Weapon " + data.id;
+        transform.parent = _player.transform;
+        transform.localPosition = Vector3.zero;
+
+        id = data.id;
+        damage = data.baseDamage;
+        quantity = data.baseQuantity;
+
+        prefabId = GameManager.instance.spawnManager.FindPrefabId(data.projectile);
+
         switch (id)
         {
             case 0:
@@ -52,11 +58,17 @@ public class Weapon : MonoBehaviour
                 speed = 0.3f;
                 break;
         }
+
+        var hand = _player.hands[(int)data.type];
+        hand.spriteRenderer.sprite = data.hand;
+        hand.gameObject.SetActive(true);
+
+        _player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     public void Batch()
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < quantity; i++)
         {
             Transform bullet;
             if (i < transform.childCount)
@@ -70,7 +82,7 @@ public class Weapon : MonoBehaviour
             }
 
             bullet.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-            var rotation = 360 * i * Vector3.forward / count;
+            var rotation = 360 * i * Vector3.forward / quantity;
             bullet.Rotate(rotation);
             bullet.Translate(bullet.up * 1.5f, Space.World);
             bullet.GetComponent<Bullet>().Init(damage, -1);
@@ -80,7 +92,7 @@ public class Weapon : MonoBehaviour
     public void LevelUp(float damage, int count)
     {
         this.damage += damage;
-        this.count += count;
+        this.quantity += count;
 
         if (id == 0)
         {
@@ -100,6 +112,6 @@ public class Weapon : MonoBehaviour
 
         var bullet = GameManager.instance.spawnManager.Get(prefabId).transform;
         bullet.SetPositionAndRotation(transform.position, Quaternion.FromToRotation(Vector3.up, dir));
-        bullet.GetComponent<Bullet>().Init(damage, count, dir);
+        bullet.GetComponent<Bullet>().Init(damage, quantity, dir);
     }
 }

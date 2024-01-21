@@ -40,5 +40,17 @@ namespace Assets.Scripts
 
             return enemy;
         }
+
+        public int FindPrefabId(GameObject go)
+        {
+            for (int i = 0; i < prefabs.Length; i++)
+            {
+                if (go == prefabs[i])
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
     }
 }
